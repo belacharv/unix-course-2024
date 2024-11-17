@@ -35,19 +35,21 @@ colnames(d)[1] <- "CHROM"
 *# 1. Distribution of PHRED qualities over the whole genome and by chromosome*
 
 d %>% 
+
     *filtering the quality smaller than 500*
   filter(QUAL < 500) %>% 
+
   
-  *# setting up the x and y axis*
+     *# setting up the x and y axis*
   ggplot(aes(CHROM, QUAL)) + 
 
-  *# creating boxplots for each chromosome*
+     *# creating boxplots for each chromosome*
   geom_boxplot(aes(fill = CHROM),show.legend = FALSE) +
 
-  *# moving the description so it´s readable*
+     *# moving the description so it´s readable*
   theme(axis.text.x = element_text(angle = 90))
 
-*# saving the final plot*
+   *# saving the final plot*
 ggsave(filename = "plot1.png", path = "~/projects/final_task/",width = 16, height = 9, units = "cm")
 
 
