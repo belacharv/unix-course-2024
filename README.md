@@ -49,7 +49,9 @@ d %>%
      *# moving the description so it´s readable*
   theme(axis.text.x = element_text(angle = 90))
 
+   
    *# saving the final plot*
+   
 ggsave(filename = "plot1.png", path = "~/projects/final_task/",width = 16, height = 9, units = "cm")
 
 
