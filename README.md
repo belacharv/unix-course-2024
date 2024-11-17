@@ -48,7 +48,7 @@ colnames(d)[1] <- "CHROM"
 
  creating boxplots for each chromosome
  
-         geom_boxplot(aes(fill = CHROM),show.legend = FALSE) +
+    geom_boxplot(aes(fill = CHROM),show.legend = FALSE) +
 
 moving the description so it´s readable
 
@@ -58,6 +58,32 @@ moving the description so it´s readable
 saving the final plot
    
       ggsave(filename = "plot1.png", path = "~/projects/final_task/",width = 16, height = 9, units = "cm")
+
+# 2. Distribution of read depth (DP) over the whole genome and by chromosome
+This task is very similar as the previous one, except we want to get the read depth (DP)
+
+Second task - PHRED qualities without the header so it can be concatenated with the rest of the files
+
+      < $INPUT zcat | grep -v '^#' | cut -f1-6 | grep -E 'chr[0-9]{1,2}\s|^#' | less -S  > ~/projects/final_task/qual_table4.tsv
+
+decompressing the file, getting rid of the first lines (header included), extracting only first 6 columns, filtering out the lines with wrong format of chromosome, saving it to qual_table4.tsv
+
+Second task - real depth (DP) filtered
+
+      < $INPUT zcat | grep -v '^#' | cut -f1-8 | grep -o  'DP=[^;]*' | sed 's/DP=//' | less -S > ~/projects/final_task/dp_filtered.tsv
+
+Extracting only DP and saving it to the dp_filtered.tsv
+
+
+
+
+
+
+Third task - INDELS vs SNPs
+
+      < $INPUT zcat | grep -v '^#' | cut -f1-8 |  awk '{if($0 ~ /INDEL/) print "INDEL"; else print "SNP"}' | less -S > ~/projects/final_task/snp.tsv
+
+
 
 
 
