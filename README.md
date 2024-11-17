@@ -6,7 +6,7 @@ From the possible tasks we could have chosen, I decided to do first four (but of
 4. Distribution of read depth (DP) qualities INDELS vs. SNPs
 
 
-# List of files you can find in this repo:
+## List of files you can find in this repo:
 - dp_filtered.tsv  *only DP values filtered*
 - filtered_table.tsv *table used for the 2 to 4th task*
 - luscinia_vars.vcf.gz *input file*
@@ -32,21 +32,21 @@ The code in R:
 d <- read_tsv("~/projects/final_task/qual_table3.tsv")
 colnames(d)[1] <- "CHROM"
 
-## 1. Distribution of PHRED qualities over the whole genome and by chromosome
+*# 1. Distribution of PHRED qualities over the whole genome and by chromosome*
 d %>% 
     *filtering the quality smaller than 500*
   filter(QUAL < 500) %>% 
   
-  *setting up the x and y axis*
+  *# setting up the x and y axis*
   ggplot(aes(CHROM, QUAL)) + 
 
-  *creating boxplots for each chromosome*
+  *# creating boxplots for each chromosome*
   geom_boxplot(aes(fill = CHROM),show.legend = FALSE) +
 
-  *moving the description so it´s readable*
+  *# moving the description so it´s readable*
   theme(axis.text.x = element_text(angle = 90))
 
-# saving the final plot
+*# saving the final plot*
 ggsave(filename = "plot1.png", path = "~/projects/final_task/",width = 16, height = 9, units = "cm")
 
 
