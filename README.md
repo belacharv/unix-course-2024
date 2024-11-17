@@ -33,6 +33,7 @@ d <- read_tsv("~/projects/final_task/qual_table3.tsv")
 colnames(d)[1] <- "CHROM"
 
 *# 1. Distribution of PHRED qualities over the whole genome and by chromosome*
+
 d %>% 
     *filtering the quality smaller than 500*
   filter(QUAL < 500) %>% 
