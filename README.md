@@ -75,15 +75,45 @@ Second task - real depth (DP) filtered
 Extracting only DP and saving it to the dp_filtered.tsv
 
 
+*# 2. Distribution of read depth (DP) over the whole genome and by chromosome*
+
+      d1 %>% 
+        filter(QUAL < 500) %>%
+        ggplot(aes(CHROM, DEPTH)) + 
+        geom_boxplot(aes(fill = CHROM),show.legend = FALSE) +
+        theme(axis.text.x = element_text(angle = 90))
+      ggsave(filename = "plot2.png", path = "~/projects/final_task/",width = 16, height = 9, units = "cm")
 
 
 
+# 3. Distribution of PHRED qualities INDELS vs. SNPs
+Now we want to compare the PHRED qualities divided by SNP or INDEL type whether there´s a difference in the quality. For that, we need to extract the the INDEL and SNP, we will use awk function for that. After extracting this information, we concatenate the snp.tsv with filtered_table.tsv to add another column with info about SNPs and INDELs
 
-Third task - INDELS vs SNPs
+*# Third task - INDELS vs SNPs*
 
       < $INPUT zcat | grep -v '^#' | cut -f1-8 |  awk '{if($0 ~ /INDEL/) print "INDEL"; else print "SNP"}' | less -S > ~/projects/final_task/snp.tsv
 
+*# 3. Distribution of PHRED qualities INDELS vs. SNPs*
 
+      d1 %>% 
+        filter(QUAL < 500) %>%
+        ggplot(aes(TYPE,QUAL)) + 
+        geom_violin(aes(fill = TYPE),draw_quantiles = 0.5) #+
+        #theme(axis.text.x = element_text(angle = 90))
+      ggsave(filename = "plot3.png", path = "~/projects/final_task/",width = 16, height = 9, units = "cm")
+
+# 4. Distribution of read depth (DP) qualities INDELS vs. SNPs
+For this task, we use the same concatenated file as for the previous one (filtered_table.tsv)
+
+      col0 <- c("#f0bf30","#91e8ef")
+      *# 4. Distribution of read depth (DP) qualities INDELS vs. SNPs*
+      d1 %>% 
+        filter(QUAL < 500) %>%
+        ggplot(aes(TYPE,DEPTH)) + 
+        geom_violin(aes(fill = TYPE),draw_quantiles = 0.5) +
+        scale_fill_manual(values = col0)
+      #theme(axis.text.x = element_text(angle = 90))
+      ggsave(filename = "plot4.png", path = "~/projects/final_task/",width = 16, height = 9, units = "cm")
 
 
 
